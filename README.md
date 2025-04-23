@@ -1,6 +1,6 @@
 # Deivao-Recon
 
-Primeiro Docker de Recon que compõe a Pipeline automatizada para Bug Bounty utilizando Docker 🐳, Python 🐍 e GO.
+Primeiro Docker de Recon que compõe a Pipeline automatizada para Bug Bounty utilizando Docker 🐳, Python 🐍 .
 
 Este projeto executa o reconhecimento de subdomínios de forma automatizada, salvando todos os resultados em uma estrutura organizada dentro de `~/Documents/Bugbounty`.
 
