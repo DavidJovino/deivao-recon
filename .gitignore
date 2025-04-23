@@ -1,0 +1,59 @@
+Byte-compiled / cache
+
+pycache/
+*.py[cod]
+*$py.class
+
+Caches e logs
+
+*.log
+*.out
+*.tmp
+
+Diretórios temporários e de ferramentas
+
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+.venv
+
+Diretórios de build e distribuição
+
+build/
+dist/
+*.egg-info/
+
+Arquivos de sistema
+
+Thumbs.db
+Desktop.ini
+
+Arquivos de resultados locais
+
+Documents/
+/output/
+results/
+
+Arquivos de relatório
+
+*.html
+*.json
+*.md
+!README.md
+
+Arquivos específicos para Docker
+
+*.tar
+
+Ignore arquivos de alvos privados
+
+alvos.txt
+
+Arquivos sensíveis
+
+*.key
+*.crt
+*.pem
+
