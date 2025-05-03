@@ -6,7 +6,7 @@ TOOLS_DIR = os.getenv("TOOLS_DIR", os.path.expanduser("~/tools"))
 
 # Configurações gerais
 DEFAULT_THREADS = 10
-DEFAULT_TIMEOUT = 2800  # segundos
+DEFAULT_TIMEOUT = 10800  # segundos => 3horas
 DEFAULT_OUTPUT_DIR = "bug_bounty_results"
 DEFAULT_LOG_LEVEL = "INFO"
 
