@@ -66,13 +66,12 @@ class SubdomainRecon:
             return {"success": False, "subdomains": [], "error": "Domínio inválido"}
         
         # Criar estrutura de diretórios
-        domain_dir = os.path.join(output_dir, domain)
-        subdomain_dir = os.path.join(domain_dir, "subdomain_enum")
+        subdomain_dir = os.path.join(output_dir, "subdomain_enum")
         os.makedirs(subdomain_dir, exist_ok=True)
         
         # Arquivos de saída
-        raw_subdomains_file = os.path.join(domain_dir, "raw_subdomains.txt")
-        final_subdomains_file = os.path.join(domain_dir, "final_subdomains.txt")
+        raw_subdomains_file = os.path.join(output_dir, "raw_subdomains.txt")
+        final_subdomains_file = os.path.join(output_dir, "final_subdomains.txt")
         
         # Executar ferramentas de enumeração em paralelo
         self.logger.step("Executando ferramentas de enumeração de subdomínios")
@@ -90,7 +89,7 @@ class SubdomainRecon:
         self.logger.success(f"Reconhecimento concluído para {domain}")
         self.logger.info(f"Total de subdomínios encontrados: {len(subdomains)}")
         self.logger.info(f"Subdomínios ativos: {len(active_subdomains)}")
-        self.logger.info(f"Resultados salvos em: {domain_dir}")
+        self.logger.info(f"Resultados salvos em: {output_dir}")
         
         return {
             "success": True,

@@ -4,10 +4,6 @@ Responsável por verificar a disponibilidade e versão das ferramentas necessár
 """
 
 import os
-import sys
-import subprocess
-import shutil
-from pathlib import Path
 from core.logger import Logger
 from core.executor import CommandExecutor
 from config.tools import TOOLS, ESSENTIAL_TOOLS, get_tools_for_module, get_alternatives, requires_special_handling

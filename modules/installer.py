@@ -4,14 +4,9 @@ Responsável por instalar e configurar as ferramentas necessárias.
 """
 
 import os
-import sys
-import time
-import json
 import shutil
 import tempfile
 import platform
-from pathlib import Path
-from datetime import datetime
 
 from core.logger import Logger
 from core.executor import CommandExecutor

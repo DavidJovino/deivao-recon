@@ -6,7 +6,6 @@ Implementa um sistema de logging avançado com suporte a cores e diferentes nív
 import logging
 import os
 import sys
-from datetime import datetime
 from config.settings import COLORS, DEFAULT_LOG_LEVEL
 
 # Configuração de formatação de logs
@@ -76,13 +75,12 @@ def setup_logger(name, log_file=None, level=DEFAULT_LOG_LEVEL):
     return logger
 
 class Logger:
-    def __init__(self, name, output_dir=None, log_file=None, level=DEFAULT_LOG_LEVEL):
+    def __init__(self, name, log_file=None, level=DEFAULT_LOG_LEVEL):
         """
         Inicializa o logger.
         
         Args:
             name (str): Nome do logger
-            output_dir (str, optional): Diretório de saída para os logs
             log_file (str, optional): Caminho completo para o arquivo de log
             level (str, optional): Nível de log
         """
@@ -93,11 +91,6 @@ class Logger:
             # Se log_file foi especificado, usar isso
             final_log_file = log_file
             os.makedirs(os.path.dirname(os.path.abspath(log_file)), exist_ok=True)
-        elif output_dir:
-            # Se output_dir foi especificado, criar arquivo com nome padrão
-            os.makedirs(output_dir, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            final_log_file = os.path.join(output_dir, f"{name}_{timestamp}.log")
         else:
             final_log_file = None
         

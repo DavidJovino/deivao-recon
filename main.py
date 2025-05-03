@@ -54,11 +54,11 @@ class BugBountyRecon:
         """
         self.args = args
         self.start_time = datetime.now()
-        
+
+        self.domain = self.args.domain.strip().lower()
         self._setup_logger()
         self._setup_directories()
         self._setup_components()
-        
         self.logger.banner("Deivao-Recon - Python Edition")
         self._log_initial_config()
         
@@ -67,22 +67,45 @@ class BugBountyRecon:
 
     def _setup_logger(self):
         """Configura o sistema de logging."""
-        self.logger = Logger(
-            name="deivao-recon",
-            log_file=self.args.log_file,
-            level="DEBUG" if self.args.verbose else DEFAULT_LOG_LEVEL
+        try:
+            self.logger = Logger(
+                name="deivao-recon",
+                log_file=self.args.log_file,
+                level="DEBUG" if self.args.verbose else DEFAULT_LOG_LEVEL
         )
+        except Exception as e:
+            print(f"Falha crítica ao configurar logger: {str(e)}", file=sys.stderr)
+            sys.exit(1)
 
     def _setup_directories(self):
         """Configura os diretórios de saída."""
-        self.output_dir = os.path.expanduser(f"~/Documents/Bugbounty/{self.args.domain}")
-        os.makedirs(self.output_dir, exist_ok=True)
-        
-        # Criar subdiretórios antecipadamente
-        self.recon_dir = os.path.join(self.output_dir, "recon")
-        self.reports_dir = os.path.join(self.output_dir, "reports")
-        os.makedirs(self.recon_dir, exist_ok=True)
-        os.makedirs(self.reports_dir, exist_ok=True)
+        try:
+            self.output_dir = os.path.expanduser(
+                os.path.join("~/Documents/Bugbounty", self.domain)
+            )
+            self.recon_dir = os.path.join(self.output_dir, "recon")
+            self.reports_dir = os.path.join(self.output_dir, "reports")
+
+            # Diretórios a serem criados diretamente em output_dir
+            dir_structure = {
+                "recon": ["subdomains"],
+                "reports": [],
+                "logs": [],
+                "temp": []
+            }
+
+            for main_dir, sub_dirs in dir_structure.items():
+                main_path = os.path.join(self.output_dir, main_dir)
+                os.makedirs(main_path, exist_ok=True)
+
+                for sub_dir in sub_dirs:
+                    os.makedirs(os.path.join(main_path, sub_dir), exist_ok=True)
+
+            self.logger.debug(f"Estrutura de diretórios criada em: {self.output_dir}")
+
+        except OSError as e:
+            self.logger.error(f"Falha ao criar diretórios: {str(e)}")
+            raise
 
     def _setup_components(self):
         """Configura os componentes principais da recon."""
@@ -103,7 +126,7 @@ class BugBountyRecon:
     def _log_initial_config(self):
         """Registra a configuração inicial no log."""
         config_details = [
-            f"Domínio alvo: {self.args.domain}",
+            f"Domínio alvo: {self.domain}",
             f"Diretório de saída: {self.output_dir}",
             f"Threads: {self.args.threads}",
             f"Timeout: {self.args.timeout} segundos",

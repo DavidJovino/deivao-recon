@@ -57,3 +57,4 @@ Arquivos sensíveis
 *.crt
 *.pem
 
+*.tar.gz
