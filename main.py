@@ -27,6 +27,7 @@ from core.logger import Logger
 from core.executor import CommandExecutor
 from tools.tool_checker import ToolChecker
 from modules.subdomain_recon import SubdomainRecon
+from modules.ip_recon import IPRecon
 from reporting.report_generator import ReportGenerator
 from reporting.notify import NotifyManager
 from config.settings import DEFAULT_THREADS, DEFAULT_TIMEOUT, DEFAULT_LOG_LEVEL
@@ -175,7 +176,20 @@ class BugBountyRecon:
             
             if results and results.get("success", False):
                 results["subdomains_file"] = results.get("final_file")
-                
+
+                # IP recon — infraestrutura, ASN, portas, NTLM, DNS
+                ip_recon = IPRecon(
+                    self.logger,
+                    threads=self.args.threads,
+                    timeout=self.args.timeout
+                )
+                ip_results = ip_recon.run(
+                    domain=self.args.domain,
+                    subdomains=results.get("active_subdomains", []),
+                    output_dir=self.recon_dir
+                )
+                results["ip_recon"] = ip_results
+
                 # Geração de relatório e notificação
                 report_file = self.generate_final_report(results)
                 self.print_summary(results, report_file)
